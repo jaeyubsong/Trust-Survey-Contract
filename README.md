@@ -25,6 +25,11 @@ https://baobab.scope.klaytn.com/account/0x64F9505Ecf8e701698Bfdc80787b228c35B8Da
 - closeSurvey는 survey를 만든 사람이 불러야 함
 - surveyId: 서버에서 사용하는 survey id
 
+
+`function getSurveyHash(string memory surveyId)`
+- questionHash, [response1Hash, response2Hash...] 를 리턴함
+- surveyId: 서버에서 사용하는 survey id
+
 ---
 
 REMIX DEFAULT WORKSPACE
