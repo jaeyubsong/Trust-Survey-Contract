@@ -28,7 +28,7 @@ contract TrustSurvey {
         owner = payable(msg.sender);
     }
 
-    function toAsciiString(address x) internal pure returns (string memory) {
+    function toAsciiString(address x) private pure returns (string memory) {
         bytes memory s = new bytes(40);
         for (uint i = 0; i < 20; i++) {
             bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
@@ -40,7 +40,7 @@ contract TrustSurvey {
         return string(s);
     }
 
-    function char(bytes1 b) internal pure returns (bytes1 c) {
+    function char(bytes1 b) private pure returns (bytes1 c) {
         if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
         else return bytes1(uint8(b) + 0x57);
     }
@@ -49,7 +49,7 @@ contract TrustSurvey {
         return keccak256(abi.encodePacked(str1)) == keccak256(abi.encodePacked(str2));
     }
 
-    function getBalance() public view returns (uint) {
+    function getBalance() private view returns (uint) {
         return address(this).balance;
     }
 
@@ -58,7 +58,7 @@ contract TrustSurvey {
     }
 
 
-    function transfer(address _to, uint _value) public returns (bool) {
+    function transfer(address _to, uint _value) private returns (bool) {
         require(getBalance() >= _value);
         payable(_to).transfer(_value);
         return true;
@@ -147,6 +147,22 @@ contract TrustSurvey {
         if (remaining > 0) {
             transfer(msg.sender, remaining);
         }
+    }
+
+
+    // Returns questionHash, [response1Hash, response2Hash,...]
+    function getSurveyHash(string memory surveyId) public view returns (string memory, string[] memory) {
+        require(surveys[surveyId].maxRespondent > 0, "Error: surveyId does not exist");
+        // Check if survey's owner is the caller
+        Survey memory s = surveys[surveyId];
+        require(msg.sender == s.owner, "Error: sender id not matching survey owner id");
+
+
+        string[] memory responseHashList = new string[](s.responseIdList.length);
+        for (uint i = 0; i < s.responseIdList.length; i++) {
+            responseHashList[i] = responses[s.responseIdList[i]].responseHash;
+        }
+        return (s.questionHash, responseHashList);
     }
 
     // Survey 종료 조건
