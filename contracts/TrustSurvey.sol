@@ -155,7 +155,6 @@ contract TrustSurvey {
         require(surveys[surveyId].maxRespondent > 0, "Error: surveyId does not exist");
         // Check if survey's owner is the caller
         Survey memory s = surveys[surveyId];
-        require(msg.sender == s.owner, "Error: sender id not matching survey owner id");
 
 
         string[] memory responseHashList = new string[](s.responseIdList.length);

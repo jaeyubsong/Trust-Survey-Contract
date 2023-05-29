@@ -1,5 +1,6 @@
-Contract id: 0x7Cf985E03Fe69b84350a6bDc1Ebfe9E316dABA40
-https://baobab.scope.klaytn.com/account/0x7Cf985E03Fe69b84350a6bDc1Ebfe9E316dABA40?tabId=internalTx
+Contract id: 0x9D9739B6F8FA1Bc180912163788e5156Db640A82
+
+https://baobab.scope.klaytn.com/account/0x9D9739B6F8FA1Bc180912163788e5156Db640A82?tabId=internalTx
 에서도 확인 가능
 
 
