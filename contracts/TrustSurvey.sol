@@ -148,10 +148,11 @@ contract TrustSurvey {
             transfer(msg.sender, remaining);
         }
     }
-
+    
+    event surveyHash(string, string[]);
 
     // Returns questionHash, [response1Hash, response2Hash,...]
-    function getSurveyHash(string memory surveyId) public view returns (string memory, string[] memory) {
+    function getSurveyHash(string memory surveyId) public  returns (string memory, string[] memory) {
         require(surveys[surveyId].maxRespondent > 0, "Error: surveyId does not exist");
         // Check if survey's owner is the caller
         Survey memory s = surveys[surveyId];
@@ -161,6 +162,8 @@ contract TrustSurvey {
         for (uint i = 0; i < s.responseIdList.length; i++) {
             responseHashList[i] = responses[s.responseIdList[i]].responseHash;
         }
+
+        emit surveyHash(s.questionHash, responseHashList);
         return (s.questionHash, responseHashList);
     }
 
